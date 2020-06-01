@@ -1,24 +1,17 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-
+import {Switch, Route, Redirect} from "react-router-dom";
+import Auth from "./pages/Auth";
+import Main from "./pages/Main"
+import "./App.css"
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          First commit
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="wrapper">
+      <Switch>
+        <Route path={"/auth"} component={Auth}/>
+        <Route path={"/"} component={Main}/>
+
+        <Redirect to={"/"} />
+      </Switch>
     </div>
   );
 }

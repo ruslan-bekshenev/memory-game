@@ -1,0 +1,25 @@
+.game-container {
+    max-width: 800px;
+    display: flex;
+    flex: 1;
+    border: 2px solid #ccc;
+    border-radius: 3px;
+}
+.game-block {
+    width: 100%;
+}
+.game-container__header {
+    text-align: center;
+    padding: 10px;
+    width: 100%;
+}
+
+.row {
+    display: flex;
+}
+
+.cell button {
+    background: #fff;
+    border: 1px solid #eee;
+    font-size: 1.5rem;
+}
