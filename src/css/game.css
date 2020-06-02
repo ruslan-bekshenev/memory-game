@@ -23,3 +23,41 @@
     border: 1px solid #eee;
     font-size: 1.5rem;
 }
+
+.card img {
+    max-width: 75%;
+}
+
+.cell-btn {
+    perspective: 1000px;
+}
+.btn-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+}
+
+.card {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden; /* Safari */
+    backface-visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.card-shirt {
+    background: linear-gradient(90deg, rgba(24,204,109,1) 0%, rgba(230,176,14,1) 55%);
+}
+.flip-card  {
+    transform: rotateY(180deg);
+}
+
+.card-face {
+    transform: rotateY(180deg);
+    background: linear-gradient(90deg, rgba(24,204,109,1) 0%, rgba(14,192,230,1) 55%);
+}

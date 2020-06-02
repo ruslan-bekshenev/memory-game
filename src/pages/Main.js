@@ -1,5 +1,8 @@
 import React, {Component} from 'react';
 import "../css/game.css"
+import shirt from "../cards/shirt.png";
+import img1 from "../cards/front/1.png";
+
 class Main extends Component {
 
     constructor(props) {
@@ -9,8 +12,8 @@ class Main extends Component {
             size: 6,
             table: [],
             numbers: [],
-            firstCard: 0,
-            secondCard: 0,
+            firstCard: {},
+            secondCard: {},
             selectedCards: []
         }
     }
@@ -19,7 +22,13 @@ class Main extends Component {
         let numbers = [];
         for (let i = 0; i < Math.pow(this.state.size, 2) / 2; i++) {
             for (let j = 0; j < 2; j++) {
-                numbers.push(i+1);
+                const number = i+1;
+                numbers.push({
+                    number: i+1,
+                    rotate: false,
+                    retired: false,
+                    img: require("../cards/front/"+number+".png")
+                });
             }
         }
         const number_shuffle = this.shuffle(numbers);
@@ -36,8 +45,15 @@ class Main extends Component {
                 {
                     item.map( (childItem, childIndex) => (
                         <div key={index+childIndex} style={ { width: 100 / this.state.size + "%"} } className="cell">
-                            <button style={{width: "100%", height: "120px"}} onClick={ () => this.selectItem(childItem) }>
-                                {childItem}
+                            <button style={{width: "100%", height: "120px"}} className="cell-btn" onClick={ () => this.selectItem(childItem) }>
+                                <div className={childItem.rotate ? "btn-container flip-card" : "btn-container"}>
+                                    <div className="card card-shirt">
+                                        <img src={shirt} alt=""/>
+                                    </div>
+                                    <div className="card card-face">
+                                        <img src={childItem.img} alt=""/>
+                                    </div>
+                                </div>
                             </button>
                         </div>
                     ) )
@@ -45,16 +61,35 @@ class Main extends Component {
             </div>
         ))
     }
-    selectItem = async (childItem) => {
-        this.setState({
-            firstCard: childItem
-        })
-        await setTimeout(() => {
+    selectItem = (childItem) => {
+        if (Object.keys(this.state.firstCard).length === 0) {
+            childItem.rotate = true;
             this.setState({
-                firstCard: 0
+                firstCard: {...childItem},
+                numbers: [...this.state.numbers]
             })
-            console.log(this.state.firstCard);
-        }, 5000)
+        } 
+        else if (Object.keys(this.state.secondCard).length === 0) {
+            childItem.rotate = true;
+            this.setState({
+                secondCard: {...childItem},
+                numbers: [...this.state.numbers]
+            })
+        }
+       setTimeout(() => {
+            childItem.rotate = false;
+            if (this.state.firstCard.number !== this.state.secondCard.number) {
+                
+            }
+            else {
+                
+            }
+            this.setState({
+                firstCard: {},
+                secondCard: {},
+                numbers: [...this.state.numbers]
+            })
+       }, 5000)
     }
     componentDidMount() {
         this.initNumbers();
