@@ -1,57 +1,67 @@
 import React, {Component} from 'react';
 import "../css/game.css"
 import shirt from "../cards/shirt.png";
-import img1 from "../cards/front/1.png";
 
 class Main extends Component {
-
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            size: 6,
-            table: [],
-            numbers: [],
-            firstCard: {},
-            secondCard: {},
-            selectedCards: []
-        }
+    state = {
+        size: 6,
+        table: [],
+        cards: [],
+        firstCard: {},
+        secondCard: {},
+        selectedcards: []
     }
     shuffle = (arr) => arr.sort(() => Math.random() - 0.5);
-    initNumbers = () => {
-        let numbers = [];
-        for (let i = 0; i < Math.pow(this.state.size, 2) / 2; i++) {
-            for (let j = 0; j < 2; j++) {
-                const number = i+1;
-                numbers.push({
-                    number: i+1,
-                    rotate: false,
-                    retired: false,
-                    img: require("../cards/front/"+number+".png")
-                });
-            }
+    initCards = () => {
+        const {size} = this.state;
+        const cards = [];
+        // for (let i = 1; i <= Math.pow(size, 2) / 2; i++) {
+        //     for (let j = 0; j < 2; j++) {
+        //         const index = j > 0 ? i+1 : i;
+        //         // console.log(index)
+        //         cards.push({
+        //             index: index,
+        //             number: i,
+        //             rotate: false,
+        //             retired: false,
+        //             img: require(`../cards/front/${i}.png`)
+        //         });
+        //     }
+        // }
+        for (let i = 1; i <= Math.pow(size, 2); i+=2) {
+            console.log(i % 2 === 0 ? i : i - 1)
+            // cards.push({
+            //     index: i % 2 === 0 ? i : i,
+            //     number: i,
+            //     rotate: false,
+            //     retired: false,
+            //     img: require(`../cards/front/${i+1}.png`)
+            // });
         }
-        const number_shuffle = this.shuffle(numbers);
-        let matrix = [];
-        while(number_shuffle.length) matrix.push(number_shuffle.splice(0,this.state.size));
+        const cardsShuffle = this.shuffle(cards);
+        const matrixCards = [];
+        cardsShuffle.forEach( (item, index, cardsShuffle) => {
+            matrixCards.push(cardsShuffle.splice(0, size));
+        })
         this.setState({
-            numbers: [...matrix]
+            cards: matrixCards
         })
         
     }
     renderTable = () => {
-        return this.state.numbers.map( (item, index) => (
+        const {cards, size} = this.state
+        return cards.map( (cardsRows, index) => (
             <div className="row" key={index}>
                 {
-                    item.map( (childItem, childIndex) => (
-                        <div key={index+childIndex} style={ { width: 100 / this.state.size + "%"} } className="cell">
-                            <button style={{width: "100%", height: "120px"}} className="cell-btn" onClick={ () => this.selectItem(childItem) }>
-                                <div className={childItem.rotate ? "btn-container flip-card" : "btn-container"}>
+                    cardsRows.map( (card, childIndex) => (
+                        <div key={index+childIndex} style={ { width: `${(100 / size)}%`} } className="cell">
+                            <button style={{width: "100%", height: "120px"}} className="cell-btn" onClick={ () => this.clickHandler(card) }>
+                                <div className={card.rotate ? "btn-container flip-card" : "btn-container"}>
                                     <div className="card card-shirt">
                                         <img src={shirt} alt=""/>
                                     </div>
                                     <div className="card card-face">
-                                        <img src={childItem.img} alt=""/>
+                                        <img src={card.img} alt=""/>
                                     </div>
                                 </div>
                             </button>
@@ -61,38 +71,38 @@ class Main extends Component {
             </div>
         ))
     }
-    selectItem = (childItem) => {
-        if (Object.keys(this.state.firstCard).length === 0) {
-            childItem.rotate = true;
+    clickHandler = (card) => {
+        const {firstCard, secondCard, cards} = this.state;
+        const newCards = cards.map( cardsRow => [...cardsRow] )
+        newCards.map( cardsRow => cardsRow.find( cardItem => cardItem.number  ) )
+        if (firstCard) {
             this.setState({
-                firstCard: {...childItem},
-                numbers: [...this.state.numbers]
+                firstCard: card,
             })
         } 
-        else if (Object.keys(this.state.secondCard).length === 0) {
-            childItem.rotate = true;
+        else if (secondCard) {
             this.setState({
-                secondCard: {...childItem},
-                numbers: [...this.state.numbers]
+                secondCard: card,
             })
         }
+        this.setState({
+            cards: cards 
+        })
        setTimeout(() => {
-            childItem.rotate = false;
-            if (this.state.firstCard.number !== this.state.secondCard.number) {
-                
-            }
-            else {
-                
+            if (firstCard.number === secondCard.number) {
+                this.setState({
+
+                })
             }
             this.setState({
                 firstCard: {},
                 secondCard: {},
-                numbers: [...this.state.numbers]
+                cards: cards
             })
        }, 5000)
     }
     componentDidMount() {
-        this.initNumbers();
+        this.initCards();
     }
 
     render() {
