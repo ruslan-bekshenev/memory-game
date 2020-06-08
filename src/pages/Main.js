@@ -7,8 +7,8 @@ class Main extends Component {
         size: 6,
         table: [],
         cards: [],
-        firstCard: {},
-        secondCard: {},
+        firstCard: null,
+        secondCard: null,
         selectedcards: []
     }
     shuffle = (arr) => arr.sort(() => Math.random() - 0.5);
@@ -28,15 +28,15 @@ class Main extends Component {
         //         });
         //     }
         // }
-        for (let i = 1; i <= Math.pow(size, 2); i+=2) {
-            console.log(i % 2 === 0 ? i : i - 1)
-            // cards.push({
-            //     index: i % 2 === 0 ? i : i,
-            //     number: i,
-            //     rotate: false,
-            //     retired: false,
-            //     img: require(`../cards/front/${i+1}.png`)
-            // });
+        for (let i = 1; i <= Math.pow(size, 2); i++) {
+            const valCard = i % 2 === 0 ? i / 2 : (i + 1) / 2;
+            cards.push({
+                index: i % 2 === 0 ? i : i,
+                number: valCard,
+                rotate: false,
+                retired: false,
+                img: require(`../cards/front/${valCard}.png`)
+            });
         }
         const cardsShuffle = this.shuffle(cards);
         const matrixCards = [];
@@ -73,33 +73,50 @@ class Main extends Component {
     }
     clickHandler = (card) => {
         const {firstCard, secondCard, cards} = this.state;
-        const newCards = cards.map( cardsRow => [...cardsRow] )
-        newCards.map( cardsRow => cardsRow.find( cardItem => cardItem.number  ) )
-        if (firstCard) {
+        const newCards = [...cards]
+        if (!firstCard) {
+            newCards.map( cardRow => {
+                const item = cardRow.find( cardItem => cardItem.index === card.index );
+                if (!!item) {
+                    item.rotate = true
+                }    
+            } )
             this.setState({
                 firstCard: card,
             })
         } 
-        else if (secondCard) {
+        else if (!secondCard) {
+            newCards.map( cardRow => {
+                const item = cardRow.find( cardItem => cardItem.index === card.index );
+                if (!!item) {
+                    item.rotate = true
+                }    
+            } )
             this.setState({
                 secondCard: card,
             })
         }
-        this.setState({
-            cards: cards 
-        })
        setTimeout(() => {
+            console.log('test')
+            console.log(firstCard, secondCard)
+           if (firstCard && secondCard) {
+               
             if (firstCard.number === secondCard.number) {
-                this.setState({
-
-                })
+                console.log('true')
             }
-            this.setState({
-                firstCard: {},
-                secondCard: {},
-                cards: cards
-            })
-       }, 5000)
+            
+           }
+           newCards.map( cardRow => {
+                const item = cardRow.find( cardItem => cardItem.index === card.index );
+                if (!!item) {
+                    item.rotate = false
+                }    
+            } )
+           this.setState({
+            firstCard: null,
+            secondCard: null,
+        })
+       }, 2000)
     }
     componentDidMount() {
         this.initCards();
