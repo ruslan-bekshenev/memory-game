@@ -1,6 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;900&display=swap');
 * {
   padding: 0;
   margin: 0;
+  font-family: 'Roboto', sans-serif;
+  color: #333;
 }
 
 .wrapper {
@@ -9,4 +12,5 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  background: linear-gradient(90deg, rgba(24,106,204,1) 14%, rgba(230,14,14,1) 78%);
 }
