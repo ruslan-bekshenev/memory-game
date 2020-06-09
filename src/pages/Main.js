@@ -5,7 +5,7 @@ import Stopwatcher from "../components/Stopwatcher";
 
 class Main extends Component {
     state = {
-        size: 2,
+        size: 4,
         table: [],
         cards: [],
         firstCard: null,
@@ -39,7 +39,7 @@ class Main extends Component {
 
     }
     renderTable = () => {
-        const {cards, size, isFinished} = this.state
+        const {cards, size} = this.state
         return cards.map((cardsRows, index) => (
             <div className="row" key={index}>
                 {
@@ -63,59 +63,56 @@ class Main extends Component {
             </div>
         ))
     }
-    clickHandler = (card) => {
-        const {firstCard, secondCard, cards} = this.state;
-        const newCards = [...cards]
-
-        if (!firstCard || !secondCard) {
-            newCards.map( cardRow => {
+    clickHandler = async (card) => {
+        const newCards = [...this.state.cards]
+        if (!this.state.firstCard || !this.state.secondCard) {
+            await newCards.map( cardRow => {
                 const selectedCard = cardRow.find(cardItem => cardItem.index === card.index);
                 if (!!selectedCard) {
                     selectedCard.rotate = true;
-
                     this.setState({
-                        firstCard: !firstCard ? {...card} : firstCard,
-                        secondCard: !secondCard && firstCard ? {...card} : secondCard,
+                        firstCard: !this.state.firstCard ? {...card} : this.state.firstCard,
+                        secondCard: !this.state.secondCard && this.state.firstCard && this.state.firstCard.index !== card.index ? {...card} : this.state.secondCard
                     })
                 }
-            })
+            } );
         }
-        setTimeout(() => {
-            const {firstCard, secondCard, cards} = this.state;
+        if (this.state.firstCard && this.state.secondCard) {
+            const modifierCards = await this.state.firstCard.number === this.state.secondCard.number ?
+                [...this.state.cards.map( cardRow => cardRow.map( cardItem =>
+                    (cardItem.index === this.state.firstCard.index || cardItem.index === this.state.secondCard.index) ?
+                        {...cardItem, rotate: true, retired: true} : cardItem )
+                )] : [...this.state.cards]
+
+            this.setState({
+                cards: [...modifierCards],
+            })
+
+
+
             this.checkFinish();
-            if (firstCard && secondCard) {
-                const modifierCards = firstCard.number === secondCard.number ? [...cards.map( cardRow =>
-                    cardRow.map( cardItem =>
-                        cardItem.index === firstCard.index || cardItem.index === secondCard.index ?
-                            {...cardItem, rotate: true, retired: true} : cardItem )
-                )] : [...cards]
-
+        }
+        console.log(this.state.firstCard, this.state.secondCard);
+        if (!this.state.secondCard) {
+            setTimeout(() => {
                 this.setState({
                     firstCard: null,
                     secondCard: null,
-                    cards: [...modifierCards],
-
-                })
-            }
-            else {
-                this.setState({
-                    firstCard: null,
-                    secondCard: null,
-                    cards: [...cards.map( cardRow => cardRow.map( cardItem => !cardItem.retired ?
+                    cards: [...this.state.cards.map( cardRow => cardRow.map( cardItem => !cardItem.retired ?
                         {...cardItem, rotate: false} :
                         {...cardItem, rotate: true} )
                     )]
                 })
-            }
-        }, 5000)
+            }, 2000)
+        }
+
     }
     checkFinish = async () => {
-        const {cards, size, retiredCount} = this.state;
+        const {cards, size} = this.state;
         let count = 0;
         cards.map( cardRow => {
             cardRow.map( cardItem => cardItem.retired ? count++ : count  )
         } )
-        console.log(Math.pow(size, 2), count);
         this.setState({
             isFinished: Math.pow(size, 2) === count
         })
@@ -130,9 +127,10 @@ class Main extends Component {
     }
 
     render() {
+        console.log(this.props.location.state.nick)
         const {isFinished, timeResult} = this.state
         return (
-            <div className="game-container">
+            <div className="container">
                 <div className="game-block">
                     <div className="game-container__header">
                         <div className={"space-between"}>
@@ -145,7 +143,7 @@ class Main extends Component {
                             {this.renderTable()}
                         </div>
                         <div className={isFinished ? "finish" : "hidden"}>
-                            Your result: {timeResult}
+                        {this.props.location.state.nick}, your result: {timeResult}
                         </div>
                     </div>
                 </div>

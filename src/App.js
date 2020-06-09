@@ -8,9 +8,9 @@ function App() {
     <div className="wrapper">
       <Switch>
         <Route path={"/auth"} component={Auth}/>
-        <Route path={"/"} component={Main}/>
+        <Route path={"/main"} component={Main}/>
 
-        <Redirect to={"/"} />
+        <Redirect from={"/"} to={"/auth"} />
       </Switch>
     </div>
   );

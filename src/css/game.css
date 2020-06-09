@@ -1,12 +1,4 @@
-.game-container {
-    max-width: 800px;
-    display: flex;
-    flex: 1;
-    background: rgba(255,255,255, 0.75);
-    -webkit-box-shadow: 1px 1px 12px 5px rgba(51,51,51,0.3);
-    -moz-box-shadow: 1px 1px 12px 5px rgba(51,51,51,0.3);
-    box-shadow: 1px 1px 12px 5px rgba(51,51,51,0.3);
-}
+
 .game-block {
     width: 100%;
 }
@@ -108,3 +100,4 @@
     left: 0;
     right: 0;
 }
+
