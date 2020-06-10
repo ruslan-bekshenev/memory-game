@@ -2,7 +2,7 @@ import React from 'react';
 import {Switch, Route, Redirect} from "react-router-dom";
 import Auth from "./pages/Auth";
 import Main from "./pages/Main"
-import "./App.css"
+import "./App.scss"
 function App() {
   return (
     <div className="wrapper">

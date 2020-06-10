@@ -2,11 +2,7 @@
 .game-block {
     width: 100%;
 }
-.game-container__header {
-    text-align: center;
-    padding: 20px 0;
-    width: 100%;
-}
+
 .space-between {
     display: flex;
     justify-content: space-between;
@@ -23,11 +19,6 @@
     background: #fff;
     border: 1px solid #eee;
     font-size: 1.5rem;
-}
-
-.card img {
-    max-width: 75%;
-    max-height: 100%;
 }
 
 .cell-btn {
@@ -51,21 +42,22 @@
     display: flex;
     align-items: center;
     justify-content: center;
-}
-.card-shirt {
-    background: linear-gradient(90deg, rgba(24,204,109,1) 0%, rgba(230,176,14,1) 55%);
+
+    &-shirt {
+        background: linear-gradient(90deg, rgba(24,204,109,1) 0%, rgba(230,176,14,1) 55%);
+    }
+
+    &-face {
+        transform: rotateY(180deg);
+        background: linear-gradient(90deg, rgba(24,204,109,1) 0%, rgba(14,192,230,1) 55%);
+    }
+    img {
+        max-width: 75%;
+        max-height: 100%;
+    }
 }
 .flip-card  {
     transform: rotateY(180deg);
-}
-
-.card-face {
-    transform: rotateY(180deg);
-    background: linear-gradient(90deg, rgba(24,204,109,1) 0%, rgba(14,192,230,1) 55%);
-}
-
-.game-container__body {
-    position: relative;
 }
 
 .hidden {
@@ -89,15 +81,14 @@
 
 .retired {
     position: relative;
-}
 
-.retired:after {
-    content: "";
-    position: absolute;
-    background: rgba(55,55,55,.4);
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    &:after {
+        content: "";
+        position: absolute;
+        background: rgba(55,55,55,.4);
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
 }
-

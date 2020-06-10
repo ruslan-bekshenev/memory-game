@@ -23,10 +23,10 @@ class Auth extends Component {
         return (
             <div className={"container"}>
                 <div className="game-block">
-                    <div className="game-container__header">
+                    <div className="container__header">
                         <h2>Settings</h2>
                     </div>
-                    <div className="game-container__body">
+                    <div className="container__body">
                         <form action="" className={"form"}>
                             <label htmlFor="nick" className={"form__label"}>Your nickname:</label>
                             <input type="text" id="nick" className={"form__input"} onChange={this.nickHandle }/>

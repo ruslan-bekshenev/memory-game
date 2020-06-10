@@ -1,13 +1,17 @@
 import React, { Component } from 'react'
-import '../css/game.css'
+import '../scss/game.scss'
 import shirt from '../cards/shirt.png'
 import Stopwatcher from '../components/Stopwatcher'
 import cn from 'classnames'
 import { debounce } from '../utils/debounce'
-
+import Firebase from "firebase";
+import config from "../config";
 /**
  * Время переворота карточек
  */
+
+Firebase.initializeApp(config);
+
 const TIME_OF_REVERCE = 2000
 
 class Main extends Component {
@@ -219,7 +223,14 @@ class Main extends Component {
     componentDidMount() {
         this.initCards()
     }
-
+    
+    writeUserData = () => {
+        Firebase.database()
+          .ref("/")
+          .set(this.state);
+        console.log("DATA SAVED");
+      };
+    
     render() {
         const { isFinished, timeResult } = this.state
         const { location } = this.props
@@ -227,7 +238,7 @@ class Main extends Component {
         return (
             <div className="container">
                 <div className="game-block">
-                    <div className="game-container__header">
+                    <div className="container__header">
                         <div className={'space-between'}>
                             <h2>Memory game</h2>
                             <Stopwatcher
@@ -236,7 +247,7 @@ class Main extends Component {
                             />
                         </div>
                     </div>
-                    <div className="game-container__body">
+                    <div className="container__body">
                         <div className="table">{this.renderTable()}</div>
                         <div className={isFinished ? 'finish' : 'hidden'}>
                             {location.state.nick}, your result: {timeResult}
