@@ -4,13 +4,11 @@ import shirt from '../cards/shirt.png'
 import Stopwatcher from '../components/Stopwatcher'
 import cn from 'classnames'
 import { debounce } from '../utils/debounce'
-import Firebase from "firebase";
-import config from "../config";
+
 /**
  * Время переворота карточек
  */
 
-Firebase.initializeApp(config);
 
 const TIME_OF_REVERCE = 2000
 
