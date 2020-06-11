@@ -221,14 +221,6 @@ class Main extends Component {
     componentDidMount() {
         this.initCards()
     }
-    
-    writeUserData = () => {
-        Firebase.database()
-          .ref("/")
-          .set(this.state);
-        console.log("DATA SAVED");
-      };
-    
     render() {
         const { isFinished, timeResult } = this.state
         const { location } = this.props
