@@ -20,9 +20,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b086e9ad-acfc-44ab-85f5-8798be960eed" name="Default Changelist" comment="result">
-      <change afterPath="$PROJECT_DIR$/.slugignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.slugignore" beforeDir="false" afterPath="$PROJECT_DIR$/.slugignore" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,7 +83,7 @@
       <workItem from="1591731571660" duration="1095000" />
       <workItem from="1591825739840" duration="557000" />
       <workItem from="1591855255718" duration="1050000" />
-      <workItem from="1591856328074" duration="2399000" />
+      <workItem from="1591856328074" duration="2997000" />
     </task>
     <task id="LOCAL-00001" summary="Игра">
       <created>1591654664206</created>
